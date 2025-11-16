@@ -12,7 +12,7 @@ jobs:
       - name: Sync Drive folder into repo
         uses: r7kamura/google-docs-to-github@v1
         with:
-          folderId: ${{ secrets.1SYQckXNwrpWVJNywaZAmCDtX-Ts1MR8u }}
+          folderId: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
           googleServiceAccountJson: ${{ secrets.MyGPTSync }}
 
       - name: Commit and push updates
