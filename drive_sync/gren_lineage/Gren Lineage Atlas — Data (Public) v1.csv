@@ -1,0 +1,6 @@
+id,name,given_name,surname,gender,birth_date,birth_place,death_date,death_place,parent_id,notes
+P1,Joseph LaPointe,Joseph,LaPointe,M,1868-01-01,"Quebec, Canada",,,,Approximate birth year; placeholder until verified.
+P2,Mary Elizabeth Stoddard,Mary Elizabeth,Stoddard,F,1870-01-01,"Illinois, USA",,,,"Married to Joseph LaPointe (1894, Chicago); later resident of Wilmette, IL."
+P3,Joseph E. LaPointe,Joseph E.,LaPointe,M,1896-01-01,"Chicago, Illinois, USA",,,P1;P2,Parent IDs use semicolon to indicate dual parents.
+P4,Eugene R. LaPointe,Eugene R.,LaPointe,M,1927-01-01,"Illinois, USA",2003-09-08,"Boca Raton, Florida, USA",P3,Obituary noted in Sun-Sentinel; St. Joan of Arc parish.
+P5,Genevieve A. (LaPointe) Witt,Genevieve A.,LaPointe,F,1930-01-01,"Illinois, USA",2016-01-01,,P3,Name recorded as Genevieve A. Witt; exact dates TBD.
