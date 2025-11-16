@@ -116,13 +116,11 @@ def sync_folder(service, drive_folder_id: str, local_subdir: str):
 
         # 1) Google Docs text document
         if mime_type == GOOGLE_DOC_MIME:
-            # Export DOCX
             docx_bytes = export_google_doc(service, file_id, DOCX_MIME)
             docx_path = output_dir / f"{safe_name}.docx"
             docx_path.write_bytes(docx_bytes)
             print(f"    → {docx_path}")
 
-            # Export Markdown
             try:
                 md_bytes = export_google_doc(service, file_id, MD_MIME)
                 md_path = output_dir / f"{safe_name}.md"
@@ -151,23 +149,19 @@ def sync_folder(service, drive_folder_id: str, local_subdir: str):
             except Exception as e:
                 print(f"    ! Slides export failed for {safe_name}: {e}")
 
-        # 4) Other google-apps.* types → export as PDF as a generic fallback
+        # 4) Folders and unsupported google-apps types → skip
+        elif mime_type == "application/vnd.google-apps.folder":
+            print(f"    Skipping folder: {safe_name}")
+            continue
         elif mime_type.startswith("application/vnd.google-apps."):
-            try:
-                pdf_bytes = export_google_doc(service, file_id, "application/pdf")
-                pdf_path = output_dir / f"{safe_name}.pdf"
-                pdf_path.write_bytes(pdf_bytes)
-                print(f"    → {pdf_path} (generic google-apps export)")
-            except Exception as e:
-                print(f"    ! Generic google-apps export failed for {safe_name}: {e}")
+            print(f"    Skipping unsupported Google type {mime_type} for {safe_name}")
+            continue
 
         # 5) Real binary files → download with get_media
         else:
-            # Non-Google file: download raw
             if "." in safe_name:
                 local_name = safe_name
             else:
-                # Simple MIME → extension mapping
                 ext = ""
                 if mime_type == "application/pdf":
                     ext = ".pdf"
