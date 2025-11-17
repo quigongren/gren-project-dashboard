@@ -14,12 +14,15 @@ import DateRangePicker from "./components/DateRangePicker";
 import PDFExportButton from "./components/PDFExportButton";
 import PresetRanges from "./components/PresetRanges";
 import AutoExportTrigger from "./components/AutoExportTrigger";
+import ProjectSummaries from "./components/ProjectSummaries";
+import FilePreviewModal from "./components/FilePreviewModal";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
   const [timelineData, setTimelineData] = useState([]);
   const [filters, setFilters] = useState({ status: "", project: "" });
   const [dateRange, setDateRange] = useState({ start: "", end: "" });
+  const [previewPath, setPreviewPath] = useState("");
 
   useEffect(() => {
     fetchSyncSummary().then(data => setSummaryData(data));
@@ -49,6 +52,7 @@ function App() {
         <>
           <SyncSummaryCard summary={summaryData.summary} timestamp={summaryData.timestamp} />
           <ProjectSyncStats breakdown={summaryData.project_breakdown} />
+          <ProjectSummaries files={summaryData.files} />
           <FileListByStatus files={summaryData.files} />
           <PresetRanges setDateRange={setDateRange} />
           <DateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
@@ -57,11 +61,12 @@ function App() {
           <ReportBundleButton files={summaryData.files} />
           <FilterControls filters={filters} setFilters={setFilters} projects={allProjects} />
           <div id="artifact-report">
-            <ArtifactReportTable files={summaryData.files} filters={filters} />
+            <ArtifactReportTable files={summaryData.files} filters={filters} onPreview={setPreviewPath} />
           </div>
           <PDFExportButton />
           <ExportCSVButton files={summaryData.files} />
           <AutoExportTrigger />
+          <FilePreviewModal filePath={previewPath} onClose={() => setPreviewPath("")} />
         </>
       ) : (
         <p className="text-gray-600">Loading sync summary...</p>

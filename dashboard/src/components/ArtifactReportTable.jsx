@@ -14,11 +14,12 @@ function formatRow(filePath, status) {
   return {
     project,
     file,
+    fullPath: filePath,
     status
   };
 }
 
-export default function ArtifactReportTable({ files, filters }) {
+export default function ArtifactReportTable({ files, filters, onPreview }) {
   const rows = [];
 
   for (const status of ["new", "updated", "deleted"]) {
@@ -48,10 +49,11 @@ export default function ArtifactReportTable({ files, filters }) {
           </thead>
           <tbody>
             {filtered.map((row, idx) => (
-              <tr key={idx} className="print:text-black">
+              <tr key={idx} className="print:text-black hover:bg-gray-100 cursor-pointer"
+                onClick={() => onPreview(row.fullPath)}>
                 <td className="border px-4 py-1">{row.project}</td>
                 <td className="border px-4 py-1">{row.file}</td>
-                <td className={`border px-4 py-1 font-medium text-center ${statusColors[row.status]}`}>
+                <td className={\`border px-4 py-1 font-medium text-center \${statusColors[row.status]}\`}>
                   {row.status.toUpperCase()}
                 </td>
               </tr>
