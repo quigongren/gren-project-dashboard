@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { fetchSyncSummary } from "./utils/fetchSyncSummary";
 import SyncSummaryCard from "./components/SyncSummaryCard";
 import ProjectSyncStats from "./components/ProjectSyncStats";
+import FileListByStatus from "./components/FileListByStatus";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
@@ -21,6 +22,7 @@ function App() {
             timestamp={summaryData.timestamp}
           />
           <ProjectSyncStats breakdown={summaryData.project_breakdown} />
+          <FileListByStatus files={summaryData.files} />
         </>
       ) : (
         <p className="text-gray-600">Loading sync summary...</p>
