@@ -17,6 +17,8 @@ BASE_OUTPUT_DIR = pathlib.Path("drive_sync")
 FOLDER_ENV_MAP: List[Tuple[str, str]] = [
     ("DRIVE_FOLDER_ID_LINEAGE", "gren_lineage"),
     ("DRIVE_FOLDER_ID_JILL", "jill_health_management"),
+    ("DRIVE_FOLDER_ID_PORTFOLIO_JFG", "portfolio_exports/jfg"),
+    ("DRIVE_FOLDER_ID_PORTFOLIO_GREN", "portfolio_exports/gren_genealogy"),
 ]
 
 # MIME types for exports
