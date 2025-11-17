@@ -6,7 +6,7 @@ export default function FilePreviewModal({ filePath, onClose }) {
 
   const fileName = filePath.split("/").pop();
   const fileType = fileName.split(".").pop().toLowerCase();
-  const previewText = \`This is a preview placeholder for \${fileName} (\${fileType})\`;
+  const previewText = `This is a preview placeholder for ${fileName} (${fileType})`;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
