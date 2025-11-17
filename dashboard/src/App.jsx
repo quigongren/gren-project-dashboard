@@ -8,10 +8,13 @@ import SyncTimelineChart from "./components/SyncTimelineChart";
 import ZipExportButton from "./components/ZipExportButton";
 import ArtifactReportTable from "./components/ArtifactReportTable";
 import ExportCSVButton from "./components/ExportCSVButton";
+import FilterControls from "./components/FilterControls";
+import ReportBundleButton from "./components/ReportBundleButton";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
   const [timelineData, setTimelineData] = useState([]);
+  const [filters, setFilters] = useState({ status: "", project: "" });
 
   useEffect(() => {
     fetchSyncSummary().then(data => setSummaryData(data));
@@ -20,20 +23,27 @@ function App() {
       .then(data => setTimelineData(data));
   }, []);
 
+  const allProjects = summaryData
+    ? Array.from(new Set(
+        ["new", "updated", "deleted"].flatMap(type =>
+          (summaryData.files[type] || []).map(path => path.split("/").slice(1, -1).join("/"))
+        )
+      ))
+    : [];
+
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold">JFG Dashboard</h1>
+    <div className="p-6 max-w-5xl mx-auto space-y-6 print:text-black print:bg-white">
+      <h1 className="text-3xl font-bold print:text-black">JFG Dashboard</h1>
       {summaryData ? (
         <>
-          <SyncSummaryCard
-            summary={summaryData.summary}
-            timestamp={summaryData.timestamp}
-          />
+          <SyncSummaryCard summary={summaryData.summary} timestamp={summaryData.timestamp} />
           <ProjectSyncStats breakdown={summaryData.project_breakdown} />
           <FileListByStatus files={summaryData.files} />
           <SyncTimelineChart timelineData={timelineData} />
           <ZipExportButton files={summaryData.files} />
-          <ArtifactReportTable files={summaryData.files} />
+          <ReportBundleButton files={summaryData.files} />
+          <FilterControls filters={filters} setFilters={setFilters} projects={allProjects} />
+          <ArtifactReportTable files={summaryData.files} filters={filters} />
           <ExportCSVButton files={summaryData.files} />
         </>
       ) : (
