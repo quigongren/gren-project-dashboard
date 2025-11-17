@@ -6,6 +6,8 @@ import ProjectSyncStats from "./components/ProjectSyncStats";
 import FileListByStatus from "./components/FileListByStatus";
 import SyncTimelineChart from "./components/SyncTimelineChart";
 import ZipExportButton from "./components/ZipExportButton";
+import ArtifactReportTable from "./components/ArtifactReportTable";
+import ExportCSVButton from "./components/ExportCSVButton";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
@@ -31,6 +33,8 @@ function App() {
           <FileListByStatus files={summaryData.files} />
           <SyncTimelineChart timelineData={timelineData} />
           <ZipExportButton files={summaryData.files} />
+          <ArtifactReportTable files={summaryData.files} />
+          <ExportCSVButton files={summaryData.files} />
         </>
       ) : (
         <p className="text-gray-600">Loading sync summary...</p>
