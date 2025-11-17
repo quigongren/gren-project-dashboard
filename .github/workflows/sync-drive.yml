@@ -15,6 +15,8 @@ jobs:
     env:
       DRIVE_FOLDER_ID_LINEAGE: ${{ secrets.DRIVE_FOLDER_ID_LINEAGE }}
       DRIVE_FOLDER_ID_JILL: ${{ secrets.DRIVE_FOLDER_ID_JILL }}
+      DRIVE_FOLDER_ID_PORTFOLIO_JFG: ${{ secrets.DRIVE_FOLDER_ID_PORTFOLIO_JFG }}
+      DRIVE_FOLDER_ID_PORTFOLIO_GREN: ${{ secrets.DRIVE_FOLDER_ID_PORTFOLIO_GREN }}
 
     steps:
       - name: Check out repository
