@@ -10,11 +10,14 @@ import ArtifactReportTable from "./components/ArtifactReportTable";
 import ExportCSVButton from "./components/ExportCSVButton";
 import FilterControls from "./components/FilterControls";
 import ReportBundleButton from "./components/ReportBundleButton";
+import DateRangePicker from "./components/DateRangePicker";
+import PDFExportButton from "./components/PDFExportButton";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
   const [timelineData, setTimelineData] = useState([]);
   const [filters, setFilters] = useState({ status: "", project: "" });
+  const [dateRange, setDateRange] = useState({ start: "", end: "" });
 
   useEffect(() => {
     fetchSyncSummary().then(data => setSummaryData(data));
@@ -31,6 +34,12 @@ function App() {
       ))
     : [];
 
+  const filteredTimeline = timelineData.filter(entry => {
+    const date = entry.date;
+    return (!dateRange.start || date >= dateRange.start) &&
+           (!dateRange.end || date <= dateRange.end);
+  });
+
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6 print:text-black print:bg-white">
       <h1 className="text-3xl font-bold print:text-black">JFG Dashboard</h1>
@@ -39,11 +48,15 @@ function App() {
           <SyncSummaryCard summary={summaryData.summary} timestamp={summaryData.timestamp} />
           <ProjectSyncStats breakdown={summaryData.project_breakdown} />
           <FileListByStatus files={summaryData.files} />
-          <SyncTimelineChart timelineData={timelineData} />
+          <DateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+          <SyncTimelineChart timelineData={filteredTimeline} />
           <ZipExportButton files={summaryData.files} />
           <ReportBundleButton files={summaryData.files} />
           <FilterControls filters={filters} setFilters={setFilters} projects={allProjects} />
-          <ArtifactReportTable files={summaryData.files} filters={filters} />
+          <div id="artifact-report">
+            <ArtifactReportTable files={summaryData.files} filters={filters} />
+          </div>
+          <PDFExportButton />
           <ExportCSVButton files={summaryData.files} />
         </>
       ) : (
