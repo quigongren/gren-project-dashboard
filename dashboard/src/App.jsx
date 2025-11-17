@@ -12,6 +12,8 @@ import FilterControls from "./components/FilterControls";
 import ReportBundleButton from "./components/ReportBundleButton";
 import DateRangePicker from "./components/DateRangePicker";
 import PDFExportButton from "./components/PDFExportButton";
+import PresetRanges from "./components/PresetRanges";
+import AutoExportTrigger from "./components/AutoExportTrigger";
 
 function App() {
   const [summaryData, setSummaryData] = useState(null);
@@ -48,6 +50,7 @@ function App() {
           <SyncSummaryCard summary={summaryData.summary} timestamp={summaryData.timestamp} />
           <ProjectSyncStats breakdown={summaryData.project_breakdown} />
           <FileListByStatus files={summaryData.files} />
+          <PresetRanges setDateRange={setDateRange} />
           <DateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
           <SyncTimelineChart timelineData={filteredTimeline} />
           <ZipExportButton files={summaryData.files} />
@@ -58,6 +61,7 @@ function App() {
           </div>
           <PDFExportButton />
           <ExportCSVButton files={summaryData.files} />
+          <AutoExportTrigger />
         </>
       ) : (
         <p className="text-gray-600">Loading sync summary...</p>
