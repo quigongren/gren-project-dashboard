@@ -1,3 +1,0 @@
-ChecksumConfirmation_v1 template
-File: ___
-SHA256: ___

@@ -1,3 +1,0 @@
-StatusAudit_v1 template
-Status: OK
-Timestamp: ___
